@@ -1,0 +1,25 @@
+﻿@charset "utf-8"; 
+
+body {margin:0px; padding:0px;color: #484f5a; font: normal normal normal 76%/1.6em Georgia, '宋体', Times, serif;line-height: 1.8em;}
+
+/* all style */
+a {color: #2970A6;text-decoration: none;}
+a:hover{color:#2970A6;text-decoration: underline;}
+ul,li,h1,h2,h3,h4,h5,h6,form,hr,p{padding:0px; margin:0px;}
+ul{list-style:none;}
+img{border:none;}
+.fb{font-weight:bold;}
+.fl{float:left;}
+.fr{float:right;}
+.tl{ text-align:left;}
+.tr{text-align:right;}
+.clear{clear:both;}
+.db{display:block;}
+.dn{display:none;}
+.blue{color:#26AAE1;}
+.red{color:#D91D3F;}
+.gray{color:Gray;}
+
+#content{padding:20px;}
+#content div{width:100px; float:left;}
+#content li#title{font-weight:bold;}
