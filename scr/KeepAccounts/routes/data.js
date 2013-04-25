@@ -33,7 +33,7 @@ exports.payment = function(req, res) {
 
 exports.income = function (req, res) {
     var db = new sqlite3.Database("./AccountBook.db");
-    var year = 2012;
+    var year = '2012';
     var sql = "select sum(Money) money from A_Income WHERE substr(Date,1,4)='" + year + "' group by substr(Date,1,7)";
     var data = [];
     db.all(sql, function (err, rows) {
