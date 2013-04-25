@@ -1,0 +1,63 @@
+﻿{{layout "layout"}}
+
+<script type="text/javascript">
+    function initChart(income, payment) {
+        $('#container').highcharts({
+            chart: {
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: 'Title',
+                x: -20
+            },
+            subtitle: {
+                text: 'Subtitle',
+                x: -20
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: { text: 'Amount' },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valuePrefix: '¥',
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Income',
+                data: income,
+                color: "#21a675"
+            }, {
+                name: 'Payment',
+                data: payment,
+                color: "#d30000"
+            }]
+        });
+    }
+
+    $(document).ready(function () {
+        $.getJSON('/data/income', function (income) {
+            $.getJSON('/data/payment', function (payment) {
+                initChart(income, payment);
+            });
+        });
+    });
+</script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>

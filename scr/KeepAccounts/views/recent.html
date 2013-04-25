@@ -1,0 +1,40 @@
+﻿{{layout "layout"}}
+
+<script type="text/javascript">
+    function ViewModel() {
+        var self = this;
+        self.list = ko.observableArray();
+        $.getJSON('/data/list',self.list);
+    }
+
+    $(document).ready(function () {
+        ko.applyBindings(new ViewModel());
+    });
+    
+
+</script>
+
+<div id="content">
+    <ul>
+        <li id="title">
+            <div>Type</div>
+            <div>Category</div>
+            <div>Category</div>
+            <div>Desc</div>
+            <div>Money</div>
+            <div>Date</div>
+        </li>
+        <li class="clear"></li>
+    </ul>
+    <ul data-bind="foreach:list">
+        <li>
+            <div data-bind="html:$data.type"></div>
+            <div data-bind="html:$data.MajorCategoryName"></div>
+            <div data-bind="html:$data.SubCategoryCode"></div>
+            <div data-bind="html:$data.Description"></div>
+            <div data-bind="html:$data.Money"></div>
+            <div data-bind="html:$data.Date"></div>
+        </li>
+        <li class="clear"></li>
+    </ul>
+</div>
