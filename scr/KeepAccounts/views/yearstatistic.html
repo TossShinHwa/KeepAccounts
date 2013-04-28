@@ -1,24 +1,35 @@
 ﻿{{layout "layout"}}
 
 <script type="text/javascript">
-    function initChart(income, payment) {
+    function initChart(x, income, payment, balance, incomedatatotal, paymentdatatotal, balancetotal) {
         $('#container').highcharts({
             chart: {
                 type: 'line',
-                marginRight: 130,
-                marginBottom: 25
+                marginRight: 40,
+                marginBottom: 50
             },
             title: {
                 text: 'Keep Accounts',
                 x: -20
             },
             subtitle: {
-                text: 'Year 2012',
+                text: "<b>Income:</b>¥" + incomedatatotal + " <b>Payment:</b>¥" + paymentdatatotal + " <b>Balance:</b>¥" + balancetotal,
                 x: -20
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: x,
+                labels: {
+                    enabled: true,
+                    rotation: -45,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    x: 4,
+                    y: 10,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
             },
             yAxis: {
                 title: { text: 'Amount' },
@@ -33,20 +44,26 @@
             },
             legend: {
                 layout: 'vertical',
-                align: 'right',
+                align: 'left',
+                x: 80,
                 verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
+                y: 50,
+                floating: true,
+                backgroundColor: '#FFFFFF'
             },
-            series: [{
+            series: [ {
+                type: 'column',
+                name: 'balance',
+                data: balance,
+                color: "#ffdede"
+            },{
                 name: 'Income',
                 data: income,
                 color: "#21a675"
             }, {
                 name: 'Payment',
                 data: payment,
-                color: "#d30000"
+                color: "#dc6200"
             }]
         });
     }
@@ -54,7 +71,26 @@
     $(document).ready(function () {
         $.getJSON('/data/income', function (income) {
             $.getJSON('/data/payment', function (payment) {
-                initChart(income, payment);
+                var x = [];
+                var incomedata = [];
+                var incomedatatotal = 0;
+                var paymentdata = [];
+                var paymentdatatotal = 0;
+                var balance = [];
+                var balancetotal = 0;
+
+                ko.utils.arrayForEach(income, function (data) {
+                    var i = income.indexOf(data);
+                    x.push(data.date);
+                    incomedata.push(data.amount);
+                    paymentdata.push(payment[i].amount);
+                    balance.push(data.amount - payment[i].amount);
+                    incomedatatotal += data.amount;
+                    paymentdatatotal += payment[i].amount;
+                    balancetotal += (data.amount - payment[i].amount);
+                });
+               
+                initChart(x, incomedata, paymentdata, balance, incomedatatotal, paymentdatatotal, balancetotal);
             });
         });
     });
