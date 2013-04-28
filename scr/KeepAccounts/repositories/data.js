@@ -41,5 +41,5 @@ exports.income = function (callback) {
 };
 
 exports.groupbycategories = function (callback) {
-
+    //SELECT MajorCategoryName FROM V_Account WHERE type='Ö§³ö' GROUP BY MajorCategoryName
 };
