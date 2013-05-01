@@ -19,6 +19,6 @@ img{border:none;}
 .red{color:#D91D3F;}
 .gray{color:Gray;}
 
-#content{padding:20px;}
-#content div{width:100px; float:left;}
-#content li#title{font-weight:bold;}
+.content{padding:20px;}
+.content div{width:100px; float:left;}
+.content li#title{font-weight:bold;}

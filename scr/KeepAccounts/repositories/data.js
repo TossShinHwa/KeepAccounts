@@ -3,7 +3,7 @@ var config = require("../config");
 
 exports.list = function (callback) {
     var db = new sqlite3.Database(config.conn);
-    var sql = "SELECT * FROM V_Account ORDER BY Date LIMIT (select count(*) FROM V_Account)-50,50";
+    var sql = "SELECT * FROM V_Account ORDER BY Date LIMIT (select count(*) FROM V_Account)-10,10";
     var data = [];
     db.all(sql, function(err, rows) {
         rows.forEach(function(obj) {
