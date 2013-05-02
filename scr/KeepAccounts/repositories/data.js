@@ -2,7 +2,7 @@ var config = require("../config");
 var sqlite = require("./sqlite3helper");
 
 exports.list = function (callback) {
-    var sql = "SELECT * FROM V_Account ORDER BY Date LIMIT (select count(*) FROM V_Account)-10,10";
+    var sql = "SELECT * FROM V_Account ORDER BY CreateDate,CreateTime LIMIT (select count(*) FROM V_Account)-10,10";
     sqlite.getlist(sql, callback);
 };
 
@@ -31,16 +31,14 @@ exports.subCategory = function (callback) {
     sqlite.getlist(sql, callback);
 };
 
-exports.addItem = function(item) {
+exports.addItem = function (item) {
     var sql = '';
     if (item.type == 0) {
-        //收入
-        sql = "insert into A_Income (Description,Money,Date,MajorCategoryId,SubCategoryId)";
-        sql += "values('" + item.Desc + "'," + item.Money + ",'" + item.Date + "'," + item.majorCategory + "," + item.subCategory + ")";
+        sql = "A_Income";//收入
     } else {
-        //支出
-        sql = "insert into A_Payment (Description,Money,Date,MajorCategoryId,SubCategoryId)";
-        sql += "values('" + item.Desc + "'," + item.Money + ",'" + item.Date + "'," + item.majorCategory + "," + item.subCategory + ")";
+        sql = "A_Payment";//支出
     }
+    sql = "insert into " + sql + " (Description,Money,Date,MajorCategoryId,SubCategoryId,CreateDate,CreateTime)";
+    sql += "values('" + item.Desc + "'," + item.Money + ",'" + item.Date + "'," + item.majorCategory + "," + item.subCategory + ",date('now','localtime'),time('now','localtime'))";
     sqlite.getlist(sql);
 };

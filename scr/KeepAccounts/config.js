@@ -1,1 +1,1 @@
-exports.conn = "C:/AccountBook.db";
+exports.conn = "D:/AccountBook.db";
