@@ -31,6 +31,16 @@ exports.subCategory = function (callback) {
     sqlite.getlist(sql, callback);
 };
 
-exports.groupbycategories = function (callback) {
-    //SELECT MajorCategoryName FROM V_Account WHERE type='支出' GROUP BY MajorCategoryName
+exports.addItem = function(item) {
+    var sql = '';
+    if (item.type == 0) {
+        //收入
+        sql = "insert into A_Income (Description,Money,Date,MajorCategoryId,SubCategoryId)";
+        sql += "values('" + item.Desc + "'," + item.Money + ",'" + item.Date + "'," + item.majorCategory + "," + item.subCategory + ")";
+    } else {
+        //支出
+        sql = "insert into A_Payment (Description,Money,Date,MajorCategoryId,SubCategoryId)";
+        sql += "values('" + item.Desc + "'," + item.Money + ",'" + item.Date + "'," + item.majorCategory + "," + item.subCategory + ")";
+    }
+    sqlite.getlist(sql);
 };

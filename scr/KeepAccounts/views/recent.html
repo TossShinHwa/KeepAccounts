@@ -66,8 +66,23 @@
             self.list.push(self.createItem());
         };
 
-        self.save = function() {
-            alert("1");
+        self.save = function () {
+            var items = [];
+            ko.utils.arrayForEach(self.list(), function (o) {
+                items.push({
+                    type: o.selectedType(),
+                    majorCategory: o.selectedMajorCategory(),
+                    subCategory: o.selectedSubCategory(),
+                    "Desc": o.Desc,
+                    "Money": o.Money,
+                    "Date": o.Date
+                });
+            });
+            var qureystring = "items=" + ko.toJSON(items).replace(/&/g, "%26");
+            $.post("/data/additems", qureystring, null, "json")
+                .done(function (o) {
+                    alert('complete');
+                });
         };
 
         self.generate = function() {

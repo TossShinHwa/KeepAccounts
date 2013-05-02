@@ -9,6 +9,11 @@ exports.getlist = function (sql, callback) {
             data.push(obj);
         });
         db.close();
-        callback(data);
+        if (callback!=undefined) callback(data);
     });
+};
+
+exports.exec = function (sql) {
+    var db = new sqlite3.Database(config.conn);
+    db.run(sql);
 };

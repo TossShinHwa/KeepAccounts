@@ -30,8 +30,11 @@ exports.subCategory = function (req, res) {
     });
 };
 
-exports.groupbycategories = function (req, res) {
-    repository.groupbycategories(function (data) {
-        res.json(data);
-    });
+exports.addItems = function (req, res) {
+    var items = JSON.parse(req.body.items);
+    for (var i = 0; i < items.length; i++)
+    {
+        repository.addItem(items[i]);
+    }
+    res.json({ "result": "ok" });
 };
