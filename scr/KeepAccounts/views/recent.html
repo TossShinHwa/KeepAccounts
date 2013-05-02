@@ -117,6 +117,8 @@
                     self.list.push(item);
                 }
             });
+            self.originalData('');
+            $('#myModal').modal('toggle');
         };
 
         self.createItem = function() {
@@ -170,57 +172,71 @@
     });
 </script>
 <form>
-<table class="table" style="width:658px;">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Major</th>
-            <th>Sub</th>
-            <th>Desc</th>
-            <th>Money</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- ko foreach: existingList,afterAdd: elementFadeIn -->
-        <tr data-bind="css: $data.type == '收入' ? 'success' : 'warning'">
-            <td style="width:110px;" data-bind="html: $data.Date"></td>
-            <td style="width:96px;" data-bind="html: $data.type"></td>
-            <td style="width:116px;" data-bind="html: $data.MajorCategoryName"></td>
-            <td style="width:116px;" data-bind="html: $data.SubCategoryCode"></td>
-            <td style="width:110px;" data-bind="html: $data.Description"></td>
-            <td style="width:110px;" data-bind="html: $data.Money"></td>
-        </tr>
-        <!-- /ko -->
-        <!-- ko foreach: list -->
-        <tr>
-            <td><input class='required dateISO' type="text" style="width:80px;" data-bind="value: $data.Date, uniqueName: true"/></td>
-            <td>
-                <select style="width:80px;" data-bind="value: $data.Type, value: $data.selectedType">
-                    <option value="1">支出</option>
-                    <option value="0">收入</option>
-                </select>
-            </td>
-            <td>
-                <select class='required' style="width:100px;" data-bind="options: $data.optionalMajorCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedMajorCategory, uniqueName: true">
-                </select>
-            </td>
-            <td>
-                <select class='required' style="width:100px;" data-bind="options: $data.optionalSubCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedSubCategory, uniqueName: true">
-                </select>
-            </td>
-            <td><input class='required' type="text" style="width:80px;" data-bind="value: $data.Desc, uniqueName: true"/></td>
-            <td><input class='required number' type="text" style="width:80px;" data-bind="value: $data.Money, uniqueName: true"/></td>
-        </tr>
-        <!-- /ko -->
-    </tbody>
-</table>
-<div>
-    <input type="button" value="Add" data-bind="click: add" class="btn" />
-    <input type="submit" value="Save" class="btn btn-primary" />
+    <table class="table" style="width:658px;">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Major</th>
+                <th>Sub</th>
+                <th>Desc</th>
+                <th>Money</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko foreach: existingList,afterAdd: elementFadeIn -->
+            <tr data-bind="css: $data.type == '收入' ? 'success' : 'warning'">
+                <td style="width:110px;" data-bind="html: $data.Date"></td>
+                <td style="width:96px;" data-bind="html: $data.type"></td>
+                <td style="width:116px;" data-bind="html: $data.MajorCategoryName"></td>
+                <td style="width:116px;" data-bind="html: $data.SubCategoryCode"></td>
+                <td style="width:110px;" data-bind="html: $data.Description"></td>
+                <td style="width:110px;" data-bind="html: $data.Money"></td>
+            </tr>
+            <!-- /ko -->
+            <!-- ko foreach: list -->
+            <tr>
+                <td><input class='required dateISO' type="text" style="width:80px;" data-bind="value: $data.Date, uniqueName: true"/></td>
+                <td>
+                    <select style="width:80px;" data-bind="value: $data.Type, value: $data.selectedType">
+                        <option value="1">支出</option>
+                        <option value="0">收入</option>
+                    </select>
+                </td>
+                <td>
+                    <select class='required' style="width:100px;" data-bind="options: $data.optionalMajorCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedMajorCategory, uniqueName: true">
+                    </select>
+                </td>
+                <td>
+                    <select class='required' style="width:100px;" data-bind="options: $data.optionalSubCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedSubCategory, uniqueName: true">
+                    </select>
+                </td>
+                <td><input class='required' type="text" style="width:80px;" data-bind="value: $data.Desc, uniqueName: true"/></td>
+                <td><input class='required number' type="text" style="width:80px;" data-bind="value: $data.Money, uniqueName: true"/></td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+    <div>
+        <input type="button" value="Add" data-bind="click: add" class="btn" />
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal">Generate</a>
+    </div>
+</form>
+
+<!-- Button to trigger modal -->
+ 
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Generate dialog</h3>
+  </div>
+  <div class="modal-body">
+    <p><textarea rows="10" style="width: 510px;" data-bind="value: originalData"></textarea></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-success" data-bind="click: generate" aria-hidden="true">Generate</button>
+  </div>
 </div>
-<div style="margin-top: 30px;">
-    <textarea rows="10" style="width: 400px;" data-bind="value: originalData"></textarea>
-    <input type="button" value="生成" data-bind="click: generate" class="btn btn-success" />
-</div>
-    </form>
