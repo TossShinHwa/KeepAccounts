@@ -22,3 +22,8 @@ img{border:none;}
 .content{padding:20px;}
 .content div{width:100px; float:left;}
 .content li#title{font-weight:bold;}
+
+/*grid or form input required error*/
+input.error { border: 1px solid red; background-color: #FDC; }
+textarea.error { border: 1px solid red; background-color: #FDC; }
+label.error{color:#be0000;background: url(/Content/images/sprite.png) no-repeat 5px -716px;margin: 0 0 1px;padding: 6px 5px 9px 30px;}
