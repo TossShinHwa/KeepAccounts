@@ -29,6 +29,8 @@ app.get('/yearstatistic', routes.yearstatistic);
 app.get('/data/list', data.list);
 app.get('/data/payment', data.payment);
 app.get('/data/income', data.income);
+app.get('/data/majorCategory', data.majorCategory);
+app.get('/data/subCategory', data.subCategory);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

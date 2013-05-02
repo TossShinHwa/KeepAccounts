@@ -47,27 +47,38 @@
         return new Date(parseInt(jsondate, 10));
     }
     
-    function ListViewModel() {
-        var self = this;
-        self.list = ko.observableArray();
-        $.getJSON('/data/list',self.list);
+    function IsNum(s) {
+        if (s != null && s != "") {
+            return !isNaN(s);
+        }
+        return false;
     }
 
-    function EditViewModel() {
+    function ViewModel() {
         var self = this;
-        self.list = ko.observableArray();
+        self.existingList = ko.observableArray();
+        self.majorCategories = ko.observable();
+        self.subCategories = ko.observable();
         self.originalData = ko.observable();
+        self.list = ko.observableArray();
 
-        self.build = function () {
+        self.add = function() {
+            self.list.push(self.createItem());
+        };
+
+        self.save = function() {
+            alert("1");
+        };
+
+        self.generate = function() {
             var array = self.originalData().split('\n');
-
             var day;
-            ko.utils.arrayForEach(array, function (data) {
+            ko.utils.arrayForEach(array, function(data) {
                 if (IsNum(data)) {
                     day = new Date();
                     day.setDate(data);
                 } else {
-                    var index=0;
+                    var index = 0;
                     var desc, money;
                     ko.utils.arrayForEach(data, function(c) {
                         if (IsNum(c)) {
@@ -78,89 +89,120 @@
                         }
                     });
 
-                    self.list.push({
-                        "Type": "支出",
-                        "BigCategory": "",
-                        "SmallCategory": "",
-                        "Desc": desc,
-                        "Money": money,
-                        "Date": day.Format()
-                    });
+                    var item = self.createItem();
+
+                    item.Desc = desc;
+                    item.Money = money;
+                    item.Date = day.Format();
+
+                    self.list.push(item);
                 }
             });
         };
+
+        self.createItem = function() {
+            var item = {
+                "Desc": '',
+                "Money": '',
+                "Date": '',
+                "selectedType": ko.observable(1),
+                "selectedMajorCategory": ko.observable(),
+                "selectedSubCategory": ko.observable(),
+                optionalMajorCategories: ko.observableArray(),
+                optionalSubCategories: ko.observableArray()
+            };
+
+            item.selectedType.subscribe(function(newValue) {
+                var list = [];
+                list.unshift({});
+                ko.utils.arrayForEach(self.majorCategories(), function (o) {
+                    if (newValue == o.Type) {
+                        list.push(o);
+                    }
+                });
+                item.optionalMajorCategories(list);
+            });
+
+            item.selectedMajorCategory.subscribe(function(newValue) {
+                var list = [];
+                list.unshift({});
+                ko.utils.arrayForEach(self.subCategories(), function (o) {
+                    if (newValue == o.MajorId) {
+                        list.push(o);
+                    }
+                });
+                item.optionalSubCategories(list);
+            });
+
+            return item;
+        };
+
+        $.getJSON('/data/list', self.existingList);
+
+        $.getJSON('/data/majorCategory', self.majorCategories)
+            .done(function() {
+                $.getJSON('/data/subCategory', self.subCategories)
+                    .done(function () {
+                        self.add();
+                    });
+            });
     }
-    
+
     $(document).ready(function () {
-        ko.applyBindings(new ListViewModel(),$("#list")[0]);
-        ko.applyBindings(new EditViewModel(), $("#edit")[0]);
+        ko.applyBindings(new ViewModel());
     });
-    
-    //判断是否为数字
-    function IsNum(s) {
-        if (s != null && s != "") {
-            return !isNaN(s);
-        }
-        return false;
-    }
-    
 </script>
 
-<div id="list" class="content">
-    <ul>
-        <li id="title">
-            <div>Type</div>
-            <div>Category</div>
-            <div>Category</div>
-            <div>Desc</div>
-            <div>Money</div>
-            <div>Date</div>
-        </li>
-        <li class="clear"></li>
-    </ul>
-    <ul data-bind="foreach:list">
-        <li>
-            <div data-bind="html:$data.type"></div>
-            <div data-bind="html:$data.MajorCategoryName"></div>
-            <div data-bind="html:$data.SubCategoryCode"></div>
-            <div data-bind="html:$data.Description"></div>
-            <div data-bind="html:$data.Money"></div>
-            <div data-bind="html:$data.Date"></div>
-        </li>
-        <li class="clear"></li>
-    </ul>
+<table class="table" style="width:600px;">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Major</th>
+            <th>Sub</th>
+            <th>Desc</th>
+            <th>Money</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: existingList -->
+        <tr data-bind="css: $data.type == '收入' ? 'success' : 'warning'">
+            <td data-bind="html: $data.Date"></td>
+            <td data-bind="html: $data.type"></td>
+            <td data-bind="html: $data.MajorCategoryName"></td>
+            <td data-bind="html: $data.SubCategoryCode"></td>
+            <td data-bind="html: $data.Description"></td>
+            <td data-bind="html: $data.Money"></td>
+        </tr>
+        <!-- /ko -->
+        <!-- ko foreach: list -->
+        <tr>
+            <td><input type="text" style="width:80px;" data-bind="value: $data.Date"/></td>
+            <td>
+                <select style="width:80px;" data-bind="value: $data.Type, value: $data.selectedType">
+                    <option value="1">支出</option>
+                    <option value="0">收入</option>
+                </select>
+            </td>
+            <td>
+                <select name="a" style="width:100px;" data-bind="options: $data.optionalMajorCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedMajorCategory">
+                </select>
+            </td>
+            <td>
+                <select style="width:100px;" data-bind="options: $data.optionalSubCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedSubCategory">
+                </select>
+            </td>
+            <td><input type="text" style="width:80px;" data-bind="value: $data.Desc"/></td>
+            <td><input type="text" style="width:80px;" data-bind="value: $data.Money"/></td>
+        </tr>
+        <!-- /ko -->
+    </tbody>
+</table>
+<div>
+    <input type="button" value="Add" data-bind="click: add" class="btn" />
+    <input type="submit" value="Save" data-bind="click: save" class="btn btn-primary" />
 </div>
-
-<div id="edit">
-    <div>
-        <textarea style="width: 400px; height: 200px;" data-bind="value: originalData"></textarea>
-        <input type="button" value="生成" data-bind="click:build" />
-    </div>
-
-    <div class="content">
-        <ul data-bind="template: { name: 'editItemTemplate', foreach: list }"></ul>
-    </div>
+<div style="margin-top: 30px;">
+    <textarea rows="10" style="width: 400px;" data-bind="value: originalData"></textarea>
+    <input type="button" value="生成" data-bind="click: generate" class="btn btn-success" />
 </div>
-
-<script type="text/html" id="editItemTemplate">
-    <li>
-        <div>
-            <select style="width:80px;" data-bind="value: $data.Type">
-                <option>支出</option>
-                <option>收入</option>
-            </select>
-        </div>
-        <div>
-            <select style="width:80px;">
-            </select>
-        </div>
-        <div>
-            <select style="width:80px;">
-            </select>
-        </div>
-        <div><input type="text" style="width:80px;" data-bind="value: $data.Desc"/></div>
-        <div><input type="text" style="width:80px;" data-bind="value: $data.Money"/></div>
-        <div><input type="text" style="width:80px;" data-bind="value: $data.Date"/></div>
-    </li>
-    <li class="clear"></li>
-</script>

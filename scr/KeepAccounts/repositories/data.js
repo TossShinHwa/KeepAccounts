@@ -1,43 +1,34 @@
-var sqlite3 = require("sqlite3");
 var config = require("../config");
+var sqlite = require("./sqlite3helper");
 
 exports.list = function (callback) {
-    var db = new sqlite3.Database(config.conn);
     var sql = "SELECT * FROM V_Account ORDER BY Date LIMIT (select count(*) FROM V_Account)-10,10";
-    var data = [];
-    db.all(sql, function(err, rows) {
-        rows.forEach(function(obj) {
-            data.push(obj);
-        });
-        db.close();
-        callback(data);
-    });
+    sqlite.getlist(sql, callback);
 };
 
 exports.payment = function (callback) {
-    var db = new sqlite3.Database(config.conn);
     var sql = "select substr(Date,1,7) date,sum(Money) amount from A_Payment group by substr(Date,1,7)";
-    var data = [];
-    db.all(sql, function (err, rows) {
-        rows.forEach(function (obj) {
-            data.push(obj);
-        });
-        db.close();
-        callback(data);
-    });
+    sqlite.getlist(sql, callback);
 };
 
 exports.income = function (callback) {
-    var db = new sqlite3.Database(config.conn);
     var sql = "select substr(Date,1,7) date,sum(Money) amount from A_Income group by substr(Date,1,7)";
-    var data = [];
-    db.all(sql, function (err, rows) {
-        rows.forEach(function (obj) {
-            data.push(obj);
-        });
-        db.close();
-        callback(data);
-    });
+    sqlite.getlist(sql, callback);
+};
+
+exports.income = function (callback) {
+    var sql = "select substr(Date,1,7) date,sum(Money) amount from A_Income group by substr(Date,1,7)";
+    sqlite.getlist(sql, callback);
+};
+
+exports.majorCategory = function (callback) {
+    var sql = "select Id,Name,Type from A_MajorCategory";
+    sqlite.getlist(sql, callback);
+};
+
+exports.subCategory = function (callback) {
+    var sql = "select Id,Name,MajorId from A_SubCategory";
+    sqlite.getlist(sql, callback);
 };
 
 exports.groupbycategories = function (callback) {
