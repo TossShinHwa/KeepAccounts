@@ -161,13 +161,15 @@
                         self.add();
                     });
             });
+        
+        $("form").validate({ submitHandler: self.save });
     }
 
     $(document).ready(function () {
         ko.applyBindings(new ViewModel());
     });
 </script>
-
+<form>
 <table class="table" style="width:600px;">
     <thead>
         <tr>
@@ -200,24 +202,25 @@
                 </select>
             </td>
             <td>
-                <select name="a" style="width:100px;" data-bind="options: $data.optionalMajorCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedMajorCategory">
+                <select class='required' style="width:100px;" data-bind="options: $data.optionalMajorCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedMajorCategory, uniqueName: true">
                 </select>
             </td>
             <td>
-                <select style="width:100px;" data-bind="options: $data.optionalSubCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedSubCategory">
+                <select class='required' style="width:100px;" data-bind="options: $data.optionalSubCategories(), optionsText: 'Name', optionsValue: 'Id', value: $data.selectedSubCategory, uniqueName: true">
                 </select>
             </td>
-            <td><input type="text" style="width:80px;" data-bind="value: $data.Desc"/></td>
-            <td><input type="text" style="width:80px;" data-bind="value: $data.Money"/></td>
+            <td><input class='required' type="text" style="width:80px;" data-bind="value: $data.Desc, uniqueName: true"/></td>
+            <td><input class='required' type="text" style="width:80px;" data-bind="value: $data.Money, uniqueName: true"/></td>
         </tr>
         <!-- /ko -->
     </tbody>
 </table>
 <div>
     <input type="button" value="Add" data-bind="click: add" class="btn" />
-    <input type="submit" value="Save" data-bind="click: save" class="btn btn-primary" />
+    <input type="submit" value="Save" class="btn btn-primary" />
 </div>
 <div style="margin-top: 30px;">
     <textarea rows="10" style="width: 400px;" data-bind="value: originalData"></textarea>
     <input type="button" value="生成" data-bind="click: generate" class="btn btn-success" />
 </div>
+    </form>
