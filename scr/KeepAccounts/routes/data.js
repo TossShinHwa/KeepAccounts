@@ -30,6 +30,13 @@ exports.subCategory = function (req, res) {
     });
 };
 
+//所有条目的Category
+exports.itemsCategory = function (req, res) {
+    repository.itemsCategory(function (data) {
+        res.json(data);
+    });
+};
+
 exports.addItems = function (req, res) {
     var items = JSON.parse(req.body.items);
     for (var i = 0; i < items.length; i++)

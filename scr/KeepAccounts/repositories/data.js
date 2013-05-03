@@ -31,6 +31,12 @@ exports.subCategory = function (callback) {
     sqlite.getlist(sql, callback);
 };
 
+//所有条目的Category
+exports.itemsCategory = function (callback) {
+    var sql = "select DISTINCT typeId,MajorCategoryId,SubCategoryId,Description from V_Account where MajorCategoryId<>'' and SubCategoryId<>'' GROUP BY typeId,MajorCategoryId,SubCategoryId,Description";
+    sqlite.getlist(sql, callback);
+};
+
 exports.addItem = function (item) {
     var sql = '';
     if (item.type == 0) {

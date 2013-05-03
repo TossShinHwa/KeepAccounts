@@ -54,7 +54,11 @@
         return false;
     }
 
-    function elementFadeIn(elem) { if (elem.nodeType === 1) $(elem).hide().fadeIn(500); }
+    function itemRefresh(list, entity) {
+        var i = list().indexOf(entity);
+        list.remove(entity);
+        list.splice(i, 0, entity);
+    }
     
     function ViewModel() {
         var self = this;
@@ -62,7 +66,9 @@
         self.majorCategories = ko.observable();
         self.subCategories = ko.observable();
         self.originalData = ko.observable();
+        self.itemsCategory = ko.observableArray();
         self.list = ko.observableArray();
+        self.currentMonth = ko.observable((new Date()).getMonth()+1);
 
         self.add = function() {
             self.list.push(self.createItem());
@@ -96,6 +102,9 @@
                 if (IsNum(data)) {
                     day = new Date();
                     day.setDate(data);
+                    day.setMonth(self.currentMonth() - 1);
+                    alert(self.currentMonth());
+                    alert(day);
                 } else {
                     var index = 0;
                     var desc, money;
@@ -119,6 +128,19 @@
             });
             self.originalData('');
             $('#myModal').modal('toggle');
+        };
+
+        self.analysis = function() {
+            ko.utils.arrayForEach(self.list(), function (item) {
+                ko.utils.arrayForEach(self.itemsCategory(), function (categoryItem) {
+                    if (item.Desc == categoryItem.Description) {
+                        item.selectedType(categoryItem.typeId);
+                        item.selectedMajorCategory(categoryItem.MajorCategoryId);
+                        item.selectedSubCategory(categoryItem.SubCategoryId);
+                        itemRefresh(self.list, item);
+                    }
+                });
+            });
         };
 
         self.createItem = function() {
@@ -159,6 +181,7 @@
         };
 
         $.getJSON('/data/list', self.existingList);
+        $.getJSON('/data/itemsCategory', self.itemsCategory);
         $.getJSON('/data/majorCategory', self.majorCategories)
             .done(function() {
                 $.getJSON('/data/subCategory', self.subCategories);
@@ -184,7 +207,7 @@
             </tr>
         </thead>
         <tbody>
-            <!-- ko foreach: existingList,afterAdd: elementFadeIn -->
+            <!-- ko foreach: existingList -->
             <tr data-bind="css: $data.type == '收入' ? 'success' : 'warning'">
                 <td style="width:110px;" data-bind="html: $data.Date"></td>
                 <td style="width:96px;" data-bind="html: $data.type"></td>
@@ -221,6 +244,7 @@
         <input type="button" value="Add" data-bind="click: add" class="btn" />
         <input type="submit" value="Save" class="btn btn-primary" />
         <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal">Generate</a>
+        <input type="button" value="Analysis" data-bind="click: analysis" class="btn btn-warning" />
     </div>
 </form>
 
@@ -232,9 +256,10 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Generate dialog</h3>
   </div>
-  <div class="modal-body">
-    <p><textarea rows="10" style="width: 510px;" data-bind="value: originalData"></textarea></p>
-  </div>
+    <div class="modal-body">
+        <p><input data-bind="value:currentMonth"/></p>
+        <p><textarea rows="10" style="width: 510px;" data-bind="value: originalData"></textarea></p>
+    </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-success" data-bind="click: generate" aria-hidden="true">Generate</button>

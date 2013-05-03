@@ -31,6 +31,7 @@ app.get('/data/payment', data.payment);
 app.get('/data/income', data.income);
 app.get('/data/majorCategory', data.majorCategory);
 app.get('/data/subCategory', data.subCategory);
+app.get('/data/itemsCategory', data.itemsCategory);
 app.post('/data/addItems', data.addItems);
 
 http.createServer(app).listen(app.get('port'), function () {
