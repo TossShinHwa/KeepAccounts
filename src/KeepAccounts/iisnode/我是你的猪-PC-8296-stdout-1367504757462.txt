@@ -1,0 +1,12 @@
+Express server listening on port \\.\pipe\950af4ea-8e35-4ba5-829e-55b413145d66
+[90mGET /recent [32m200 [90m21ms - 11.54kb[0m
+[90mGET /data/majorCategory [32m200 [90m3ms - 838b[0m
+[90mGET /data/list [36m304 [90m33ms[0m
+[90mGET /data/subCategory [36m304 [90m3ms[0m
+[90mGET /yearstatistic [36m304 [90m4ms[0m
+[90mGET /data/income [32m200 [90m2ms - 705b[0m
+[90mGET /data/payment [32m200 [90m3ms - 696b[0m
+[90mGET /recent [36m304 [90m3ms[0m
+[90mGET /data/majorCategory [32m200 [90m2ms - 838b[0m
+[90mGET /data/list [36m304 [90m37ms[0m
+[90mGET /data/subCategory [36m304 [90m3ms[0m

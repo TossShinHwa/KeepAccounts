@@ -1,0 +1,4 @@
+Application has thrown an uncaught exception and is terminated:
+TypeError: Cannot call method 'forEach' of undefined
+    at exports.getlist (C:\github\KeepAccounts\scr\KeepAccounts\repositories\sqlite3helper.js:8:14)
+    at Statement.<anonymous> (C:\github\KeepAccounts\scr\KeepAccounts\node_modules\sqlite3\lib\sqlite3.js:9:41)

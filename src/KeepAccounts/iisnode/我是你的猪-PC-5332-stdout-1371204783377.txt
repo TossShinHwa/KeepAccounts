@@ -1,0 +1,27 @@
+Express server listening on port \\.\pipe\7fbd8c72-dec5-49ff-9590-3e5889387e61
+[90mGET / [32m200 [90m4ms - 2.05kb[0m
+[90mGET /recent [32m200 [90m4ms - 12.59kb[0m
+[90mGET /data/majorCategory [32m200 [90m4ms - 838b[0m
+[90mGET /data/list [32m200 [90m28ms - 4.47kb[0m
+[90mGET /data/itemsCategory [32m200 [90m26ms - 32.04kb[0m
+[90mGET /data/subCategory [32m200 [90m2ms - 3.6kb[0m
+[90mPOST /data/additems [32m200 [90m1ms - 20b[0m
+[90mGET /data/list [32m200 [90m30ms - 4.47kb[0m
+[90mGET /recent [36m304 [90m2ms[0m
+[90mGET /data/majorCategory [32m200 [90m2ms - 838b[0m
+[90mGET /data/itemsCategory [32m200 [90m23ms - 32.77kb[0m
+[90mGET /data/list [32m200 [90m34ms - 4.42kb[0m
+[90mGET /data/subCategory [36m304 [90m2ms[0m
+[90mGET /yearstatistic [32m200 [90m2ms - 6.91kb[0m
+[90mGET /data/income [32m200 [90m1ms - 759b[0m
+[90mGET /data/payment [32m200 [90m2ms - 803b[0m
+[90mGET /recent [36m304 [90m2ms[0m
+[90mGET /data/itemsCategory [36m304 [90m19ms[0m
+[90mGET /data/majorCategory [32m200 [90m7ms - 838b[0m
+[90mGET /data/list [36m304 [90m36ms[0m
+[90mGET /data/subCategory [36m304 [90m3ms[0m
+[90mPOST /data/additems [32m200 [90m0ms - 20b[0m
+[90mGET /data/list [32m200 [90m39ms - 4.44kb[0m
+[90mGET /yearstatistic [36m304 [90m0ms[0m
+[90mGET /data/income [32m200 [90m2ms - 812b[0m
+[90mGET /data/payment [32m200 [90m2ms - 803b[0m

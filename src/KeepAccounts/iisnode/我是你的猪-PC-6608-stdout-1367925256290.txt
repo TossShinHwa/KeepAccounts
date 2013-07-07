@@ -1,0 +1,22 @@
+Express server listening on port \\.\pipe\ab65d644-1a62-480a-b899-efbbc827c393
+[90mGET / [36m304 [90m5ms[0m
+[90mGET /recent [36m304 [90m5ms[0m
+[90mGET /data/majorCategory [32m200 [90m3ms - 838b[0m
+[90mGET /data/itemsCategory [36m304 [90m34ms[0m
+[90mGET /data/list [36m304 [90m49ms[0m
+[90mGET /data/subCategory [36m304 [90m2ms[0m
+[90mGET /Content/images/sprite.png [33m404 [90m2ms[0m
+[90mPOST /data/additems [32m200 [90m1ms - 20b[0m
+[90mGET /data/list [32m200 [90m72ms - 4.44kb[0m
+[90mGET /recent [36m304 [90m3ms[0m
+[90mGET /data/majorCategory [32m200 [90m4ms - 838b[0m
+[90mGET /data/list [32m200 [90m31ms - 4.46kb[0m
+[90mGET /data/itemsCategory [36m304 [90m29ms[0m
+[90mGET /data/subCategory [36m304 [90m3ms[0m
+[90mPOST /data/additems [32m200 [90m1ms - 20b[0m
+[90mGET /data/list [36m304 [90m29ms[0m
+[90mGET /data/subCategory [36m304 [90m3ms[0m
+[90mPOST /data/additems [32m200 [90m0ms - 20b[0m
+[90mGET /data/list [32m200 [90m39ms - 4.44kb[0m
+[90mPOST /data/additems [32m200 [90m0ms - 20b[0m
+[90mGET /data/list [32m200 [90m29ms - 4.44kb[0m

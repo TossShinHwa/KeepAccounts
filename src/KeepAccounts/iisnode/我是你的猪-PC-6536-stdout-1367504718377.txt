@@ -1,0 +1,9 @@
+Express server listening on port \\.\pipe\c70c1901-9f7f-4101-a980-5bbd13ac00c3
+[90mGET /recent [32m200 [90m17ms - 11.51kb[0m
+[90mGET /data/majorCategory [32m200 [90m4ms - 838b[0m
+[90mGET /data/list [36m304 [90m41ms[0m
+[90mGET /data/subCategory [36m304 [90m3ms[0m
+[90mGET /recent [36m304 [90m4ms[0m
+[90mGET /data/majorCategory [32m200 [90m3ms - 838b[0m
+[90mGET /data/list [36m304 [90m28ms[0m
+[90mGET /data/subCategory [36m304 [90m2ms[0m
