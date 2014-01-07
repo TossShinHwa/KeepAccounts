@@ -2,7 +2,7 @@ var config = require("../config");
 var sqlite = require("./sqlite3helper");
 
 exports.list = function (callback) {
-    var sql = "SELECT * FROM V_Account ORDER BY CreateDate,CreateTime LIMIT (select count(*) FROM V_Account)-10,10";
+    var sql = "SELECT * FROM V_Account ORDER BY Date,CreateDate,CreateTime LIMIT (select count(*) FROM V_Account)-10,10";
     sqlite.getlist(sql, callback);
 };
 

@@ -3,6 +3,14 @@
 <script type="text/javascript">
     function initChart(x, income, payment, balance, incomedatatotal, paymentdatatotal, balancetotal) {
         $('#container').highcharts({
+            credits: {
+                enabled: false
+            },
+            navigation: {
+                buttonOptions: {
+                    enabled: false
+                }
+            },
             chart: {
                 type: 'line',
                 marginRight: 40,
@@ -40,7 +48,9 @@
                 }]
             },
             tooltip: {
-                valuePrefix: '¥'
+                valuePrefix: '¥',
+                crosshairs: true,
+                shared: true
             },
             legend: {
                 layout: 'vertical',
@@ -140,6 +150,7 @@
 
                 ko.utils.arrayForEach(income, function (data) {
                     var i = income.indexOf(data);
+                    debugger
                     x.push(data.date);
                     incomedata.push(data.amount);
                     paymentdata.push(payment[i].amount);
@@ -148,7 +159,10 @@
                     paymentdatatotal += payment[i].amount;
                     balancetotal += (data.amount - payment[i].amount);
                 });
-               
+                incomedatatotal = incomedatatotal.toFixed(2);
+                paymentdatatotal = paymentdatatotal.toFixed(2);
+                balancetotal = balancetotal.toFixed(2);
+                
                 initChart(x, incomedata, paymentdata, balance, incomedatatotal, paymentdatatotal, balancetotal);
             });
         });
