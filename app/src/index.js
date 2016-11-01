@@ -3,6 +3,6 @@ import config from './config';
 import reducers from './app/reducers';
 import routes from './app/routes';
 
-export default function() {
+export default function () {
   return cuz(reducers, routes, config);
 }
